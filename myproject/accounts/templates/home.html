@@ -1,0 +1,80 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Attendance System</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .hero-section {
+            background-color: #f8f9fa;
+            padding: 50px 0;
+            text-align: center;
+        }
+        .hero-section h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+        .hero-section p {
+            font-size: 1.25rem;
+            margin-bottom: 30px;
+        }
+        .hero-section .btn {
+            font-size: 1.1rem;
+            margin: 0 10px;
+        }
+        .admin-message, .employee-message {
+            margin-top: 20px;
+            font-size: 1.2rem;
+            color: #6c757d;
+        }
+        .admin-message a, .employee-message a {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="{% url 'home' %}">Home</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'login' %}">Login</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <section class="hero-section">
+            <div class="container">
+                <h1>Welcome to Our Company</h1>
+                <h3>Employee Attendance System</h3>
+                <p>Welcome to our Employee Attendance System. This platform allows employees to track their attendance, view their attendance history, and manage their own time records efficiently.</p>
+                <a class="btn btn-primary btn-lg" href="{% url 'login' %}">Login</a>
+                
+                <div class="admin-message">
+                    <p>If you are an admin, please <a href="{% url 'admin:index' %}">click here</a> to access the admin panel.</p>
+                </div>
+                
+
+            </div>
+        </section>
+    </main>
+    <footer class="text-center mt-4">
+        <p>&copy; {{ current_year }} {{ company_name }}. All rights reserved.</p>
+    </footer>
+    
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

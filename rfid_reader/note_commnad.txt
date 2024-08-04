@@ -1,0 +1,12 @@
+pip install requests
+pip install mfrc522  # or the library specific to your RFID module
+
+
+python rfid_reader.py
+
+
+pip install python-dotenv
+pip install mfrc522
+# or
+pip3 install mfrc522
+pip install mfrc522-python

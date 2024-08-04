@@ -1,0 +1,22 @@
+<!-- ic_no_input.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>IC Number Input</title>
+</head>
+<body>
+    <h1>Enter IC Number</h1>
+    {% if messages %}
+        <ul>
+            {% for message in messages %}
+                <li class="{{ message.tags }}">{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>

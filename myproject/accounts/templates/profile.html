@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1>Welcome, {{ employeeID.full_name }}</h1>
+    <div class="profile-info mb-4">
+        <p><strong>Last Login:</strong> {{ user.last_login|date:"F j, Y, g:i a" }}</p>
+    </div>
+    <div class="profile-actions mb-4">
+        <a href="{% url 'edit_profile' %}" class="btn btn-primary">Edit Profile</a>
+        <a href="{% url 'logout' %}" class="btn btn-danger">Logout</a>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <table class="table table-bordered">
+                <tbody>
+                    <tr>
+                        <th scope="row">Username</th>
+                        <td>{{ user.username }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Full Name</th>
+                        <td>{{ employeeID.full_name }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Date Of Birth</th>
+                        <td>{{ employeeID.date_of_birth }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Email</th>
+                        <td>{{ employeeID.email }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Phone</th>
+                        <td>{{ employeeID.phone_number }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Address</th>
+                        <td>{{ employeeID.address }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Position</th>
+                        <td>{{ employeeID.position }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Department</th>
+                        <td>{{ employeeID.department }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Employee ID</th>
+                        <td>{{employeeID.employee_id}}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">IC Card No.</th>
+                        <td>{{ employeeID.IC_No }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Hire Date</th>
+                        <td>{{ employeeID.date_joined }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
