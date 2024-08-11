@@ -146,32 +146,30 @@ def ic_no_input(request):
 
 
 #for RFID reader
-@csrf_exempt  # Temporarily disable CSRF for API (use authentication in production)
+@csrf_exempt
 def record_attendance(request):
     if request.method == 'POST':
         try:
             # Extract IC number from the request body
             body = json.loads(request.body)
             ic_no = body.get('ic_no')
-            logger.debug('This is a debug message:',ic_no)
+            logger.debug('IC No received: %s', ic_no)  # Corrected logging statement
+
             if not ic_no:
-                return JsonResponse({'error': 'IC No is requireds.'}, status=400)
+                return JsonResponse({'error': 'IC No is required.'}, status=400)
             
             # Retrieve employee details using IC_No
             employee = EmployeeDetail.objects.get(IC_No=ic_no)
             
-            # Get the current time
+            # Get the current time and convert to local time
             now = timezone.now()
-            
-            # Convert UTC time to local time
             local_timezone = pytz.timezone('Asia/Tokyo')  # Replace with your desired timezone
             local_time = now.astimezone(local_timezone)
             
-            # Check all attendance records for the given employee
+            # Check for existing attendance records with status 'I'
             records = EmployeeAttendance.objects.filter(employee_id=employee.employee_id)
-            
-            # Flag to determine if any record with status 'I' was found
             found_incomplete = False
+            record_status = 'I'  # Default to 'I' if no record with 'I' is found
             
             for record in records:
                 if record.status == 'I':
@@ -180,22 +178,46 @@ def record_attendance(request):
                     record.status = 'O'
                     record.save()
                     found_incomplete = True
+                    record_status = 'O'
             
             if not found_incomplete:
-                # No record with status 'I' was found, so create a new one
+                # Create a new record if no incomplete record was found
                 EmployeeAttendance.objects.create(
                     employee_id=employee.employee_id,
                     date=local_time.date(),
                     start_time=local_time.time(),
-                    end_time=None,  # Placeholder, should be updated when the user checks out
+                    end_time=None,  # Placeholder, to be updated on checkout
                     status='I',
                     IC_No=ic_no
                 )
+                record_status = 'I'
             
-            return JsonResponse({'message': 'Attendance recorded successfully.'})
+            # Get employee details for the response
+            full_name, employee_id = get_employee_details(employee.employee_id)
+            
+            return JsonResponse({
+                'message': 'Attendance recorded successfully.',
+                'employee': {
+                    'full_name': full_name,
+                    'employee_id': employee_id,
+                    'status': record_status
+                }
+            })
             
         except EmployeeDetail.DoesNotExist:
-            # Handle the case where IC_No is not found
             return JsonResponse({'error': 'Employee with this IC Number does not exist.'}, status=404)
+        except json.JSONDecodeError:
+            return JsonResponse({'error': 'Invalid JSON format.'}, status=400)
+        except Exception as e:
+            logger.error('An unexpected error occurred: %s', e)
+            return JsonResponse({'error': 'An unexpected error occurred.'}, status=500)
     else:
         return JsonResponse({'error': 'Invalid request method.'}, status=405)
+    
+# Function to get employee details by employee ID
+def get_employee_details(employee_id):
+    try:
+        employee = EmployeeDetail.objects.get(employee_id=employee_id)
+        return employee.full_name, employee.employee_id
+    except EmployeeDetail.DoesNotExist:
+        return None, None
