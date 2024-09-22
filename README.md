@@ -1,87 +1,88 @@
-# RFID Reader Project
+# RFIDリーダープロジェクト
 
-## Overview
-This project is an **Employee Attendance System** that utilizes RFID technology to track and manage employee attendance. The system is built using Python and Django, and is designed to work with an RFID reader module. The project uses SQLite for database management and involves communication between a PC and a Raspberry Pi using JSON.
+## 概要
+このプロジェクトは、RFID技術を利用して従業員の出席を追跡および管理する**従業員出席システム**です。システムはPythonとDjangoを使用して構築されており、RFIDリーダーモジュールと連携するように設計されています。プロジェクトでは、データベース管理にSQLiteを使用し、PCとRaspberry Pi間でJSONを使用して通信を行います。
 
-## Features
-- **RFID Tag Reading**: Reads RFID tags to identify employees.
-- **Attendance Logging**: Logs the attendance of employees in a SQLite database.
-- **User Interface**: Provides a simple interface for managing and viewing attendance records.
-- **Web Application**: Built using the Django framework for robust and scalable web development.
-- **JSON Communication**: Sends and receives data between the PC and Raspberry Pi using JSON.
+## 特徴
+- **RFIDタグ読み取り**: RFIDタグを読み取り、従業員を識別します。
+- **出席記録**: 従業員の出席をSQLiteデータベースに記録します。
+- **ユーザーインターフェース**: 出席記録を管理および表示するためのシンプルなインターフェースを提供します。
+- **ウェブアプリケーション**: 堅牢でスケーラブルなウェブ開発のためにDjangoフレームワークを使用して構築されています。
+- **JSON通信**: PCとRaspberry Pi間でデータを送受信します。
 
-## Requirements
-- **Hardware**:
-  - RFID Reader Module (e.g., RC522)
-  - RFID Tags
-  - l2C LCD 1602 (for disply tag user name ...)
-  - Raspberry Pi (or any compatible microcontroller)
-  - PC for running the Django web application
-  - Breadboard and Jumper Wires
+## 必要条件
+- **ハードウェア**:
+  - RFIDリーダーモジュール（例：RC522）
+  - RFIDタグ
+  - I2C LCD 1602（タグのユーザー名を表示するため）
+  - Raspberry Pi（または互換性のあるマイクロコントローラー）
+  - Djangoウェブアプリケーションを実行するためのPC
+  - ブレッドボードとジャンパーワイヤー
 
-- **Software**:
+- **ソフトウェア**:
   - Python 3.x
   - Django
   - SQLite
-  - Required Python libraries (e.g., `RPi.GPIO`, `MFRC522`, `requests`)
+  - 必要なPythonライブラリ（例：`RPi.GPIO`、`MFRC522`、`requests`）
 
-## Installation
-1. **Clone the repository**:
+## インストール
+1. **リポジトリをクローン**:
     ```bash
     git clone https://github.com/sujanpok/final_RFID_Moudle-py_APP.git
     cd final_RFID_Moudle-py_APP/rfid_reader
     ```
 
-2. **Install dependencies**:
-    ```bash
-    pip install -r requirements.txt
-    ```
+2. **依存関係をインストール**:
+   - 必要に応じてインストールしてください
 
-3. **Run the RFID reader application on Raspberry Pi**:
+3. **Raspberry PiでRFIDリーダーアプリケーションを実行**:
     ```bash
     python rfid_reader.py
     ```
 
-## Django Web Application Setup
-1. **Navigate to the Django project directory on your PC**:
+## Djangoウェブアプリケーションのセットアップ
+1. **PC上のDjangoプロジェクトディレクトリに移動**:
     ```bash
     cd ../myproject
     ```
 
-2. **Install Django and other dependencies as requied**:
+2. **Djangoおよびその他の依存関係をインストール**:
 
-3. **Apply migrations**:
+3. **マイグレーションを適用**:
     ```bash
     python manage.py migrate
     ```
 
-4. **Run the Django development server**:
+4. **Django開発サーバーを実行**:
     ```bash
     python manage.py runserver
     ```
 
-## Usage
-1. **Connect the RFID reader** to your Raspberry Pi using the GPIO pins.
-2. **Run the RFID reader application** on the Raspberry Pi using the command mentioned above.
-3. **Access the Django web application** at `http://localhost:8000` on your PC to manage and view attendance records.
-4. **Scan RFID tags** to log attendance. The data will be sent from the Raspberry Pi to the PC using JSON.
+## 使用方法
+1. **RFIDリーダーをRaspberry PiにGPIOピンを使用して接続**。
+2. **上記のコマンドを使用してRaspberry PiでRFIDリーダーアプリケーションを実行**。
+3. **PC上の`http://localhost:8000`でDjangoウェブアプリケーションにアクセスして、出席記録を管理および表示**。
+4. **RFIDタグをスキャンして出席を記録**。データはRaspberry PiからPCにJSONを使用して送信されます。
 
-## Code Explanation
-The main script `rfid_reader.py` handles the reading of RFID tags and logging attendance. Here is a brief overview of the code:
+## コードの説明
+メインスクリプト`rfid_reader.py`は、RFIDタグの読み取りと出席の記録を処理します。コードの簡単な概要は以下の通りです：
 
-- **Initialization**: Sets up the RFID reader and initializes the GPIO pins.
-- **Main Loop**: Continuously checks for RFID tags and logs the attendance when a tag is detected.
-- **Database Interaction**: Stores the attendance records in a SQLite database for later retrieval and analysis.
-- **JSON Communication**: Sends attendance data from the Raspberry Pi to the Django web application on the PC using JSON.
+- **初期化**: RFIDリーダーをセットアップし、GPIOピンを初期化します。
+- **メインループ**: 継続的にRFIDタグをチェックし、タグが検出されたときに出席を記録します。
+- **データベース操作**: 出席記録をSQLiteデータベースに保存し、後で取得および分析できるようにします。
+- **JSON通信**: 出席データをRaspberry PiからPC上のDjangoウェブアプリケーションにJSONを使用して送信します。
 
-The Django project, located in the `myproject` directory, provides a web interface for managing and viewing attendance records. It includes:
+`myproject`ディレクトリにあるDjangoプロジェクトは、出席記録を管理および表示するためのウェブインターフェースを提供します。これには以下が含まれます：
 
-- **Models**: Defines the database schema for storing attendance records.
-- **Views**: Handles the logic for displaying attendance data and managing records.
-- **Templates**: Provides the HTML templates for the web interface.
+- **モデル**: 出席記録を保存するためのデータベーススキーマを定義します。
+- **ビュー**: 出席データを表示し、記録を管理するためのロジックを処理します。
+- **テンプレート**: ウェブインターフェースのHTMLテンプレートを提供します。
 
-## Contributing
-Feel free to fork this repository and contribute by submitting pull requests. For major changes, please open an issue first to discuss what you would like to change.
+## 貢献
+このリポジトリをフォークして、プルリクエストを提出することで貢献してください。大きな変更の場合は、まずイシューを開いて変更内容を議論してください。
 
-## Acknowledgments
-- Thanks to the open-source community for providing the libraries and tools used in this project.
+## 謝辞
+このプロジェクトで使用されているライブラリやツールを提供してくれたオープンソースコミュニティに感謝します。
+
+## 追加情報
+`myproject`では、まず管理者登録を行い、社員の情報を登録する必要があります。また、社員の情報にタグ（NFC）の物理アドレスを登録する必要があります。
