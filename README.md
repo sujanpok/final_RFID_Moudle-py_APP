@@ -86,3 +86,7 @@
 
 ## 追加情報
 `myproject`では、まず管理者登録を行い、社員の情報を登録する必要があります。また、社員の情報にタグ（NFC）の物理アドレスを登録する必要があります。
+
+### セットアップイメージ
+![セットアップイメージ](https://github.com/sujanpok/final_RFID_Moudle-py_APP/blob/main/img.png)
+参照リンク：https://docs.sunfounder.com/projects/davinci-kit/ja/latest/2.2.7_mfrc522_rfid_module.html
